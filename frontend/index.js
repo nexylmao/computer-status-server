@@ -25,7 +25,7 @@ window.onload = function () {
     };
 
     const generateHtml = async function(data) {
-        return `<div class="col-4 m-2 card text-dark p-3">
+        return `<div class="col-4 m-2 card text-dark p-3" id="${data.id}-container">
                     <h5 class="mx-auto">${data.id}</h5>
                     <h6 class="mx-auto">${data.os} (${data.arch})</h6>
                     <h6 class="mx-auto">Logged in user : ${data.user}</h6>
@@ -53,19 +53,26 @@ window.onload = function () {
                 </div>`;
     };
 
+    let container = this.document.getElementById('container');
+
+    const addHtml = function(html) {
+        container.innerHTML += html;
+    }
+
     const routine = async function () {
         let data = await this.fetch("http://localhost:8080/computers");
 
-        let container = this.document.getElementById('container');
         container.innerHTML = '';
-
+        
         let computers = (await data.json())._embedded.ComputerStatus;
         computers.forEach(async computer => {
             let id = computer._links.self.href.split('/');
             id = id[id.length - 1];
             computer.id = id;
 
-            container.innerHTML += await generateHtml(computer);
+            const html = await generateHtml(computer);
+            addHtml(html);
+
             document.getElementById(id).onclick = async () => {
                 let data = await this.fetch("http://localhost:8080/computers/" + id, {
                     method: 'DELETE'
