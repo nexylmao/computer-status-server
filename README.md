@@ -32,3 +32,6 @@ Here we will go over parts, and explaining them a little bit more, and afterward
 That data, is sent every couple seconds by a js script (that runs on Node) from computers. The script doesn't use any external libraries, therefore deploying it should really easy (just installing NodeJS if you don't have it installed).
 
 Over HTTP it comes to the backend. Written in Kotlin on Spring Boot, using a minimal amount of libraries is also minimal, but it does JPA. For it, you'll need [Java](https://adoptopenjdk.net/) runtime and a MongoDB database.
+
+### Deployment
+Will be filled in near future
